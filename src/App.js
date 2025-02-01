@@ -3,37 +3,41 @@ import React, { useState } from "react";
 const API_URL = "https://1u5txu1g0h.execute-api.us-east-1.amazonaws.com/text2speech_stage";
 
 function App() {
-  const [file, setFile] = useState(null);
+  const [text, setText] = useState(");
   const [voice, setVoice] = useState("Joanna");
   const [downloadUrl, setDownloadUrl] = useState(null);
   const [message, setMessage] = useState("");
   const [isProcessing, setIsProcessing] = useState(false);
 
-  // Handle file selection
-  const handleFileUpload = (event) => {
-    setFile(event.target.files[0]);
+  // Handle texr input
+  const handleTextChange = (event) => {
+    setText(event.target.value);
   };
 
-  // Submit file to backend
+  // Submit request
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!file) {
-      setMessage("Please upload a text file.");
+    if (!text) {
+      setMessage("Please enter the text.");
       return;
     }
 
     setMessage("Processing...");
     setIsProcessing(true);
 
-    const formData = new FormData();
-    formData.append("file", file);
-    formData.append("voice", voice);
+    const requestBody = {
+      text: text,
+      choice_of_voice: voice
+    };
 
     try {
       const response = await fetch(API_URL, {
         method: "POST",
-        body: formData, // Sending file as FormData
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(requestBody), 
       });
 
       const data = await response.json();
@@ -50,13 +54,20 @@ function App() {
 
     setIsProcessing(false);
   };
+  
 
   return (
     <div style={{ maxWidth: "500px", margin: "50px auto", textAlign: "center" }}>
       <h2>Text-to-Speech Converter</h2>
 
-      {/* File Upload */}
-      <input type="file" accept=".txt" onChange={handleFileUpload} style={{ marginBottom: "10px" }} />
+      {/* Text Input */}
+      <textarea
+        value={text}
+        onChange={handleTextChange}
+        placeholder="Enter your text here"
+        rows="4"
+        style={{ width: "100%", padding: "10px", marginBottom: "10px" }}
+      />
 
       {/* Voice Selection */}
       <select
