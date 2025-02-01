@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-const API_URL = "https://1u5txu1g0h.execute-api.us-east-1.amazonaws.com";
+const API_URL = "https://1u5txu1g0h.execute-api.us-east-1.amazonaws.com/text2speech_stage";
 
 function App() {
   const [file, setFile] = useState(null);
