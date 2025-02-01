@@ -42,6 +42,8 @@ function App() {
 
       const data = await response.json();
 
+      console.log(data);
+
       if (response.ok && data.download_url) {
         setDownloadUrl(data.download_url);
         setMessage("Conversion successful! Click the button to download.");
