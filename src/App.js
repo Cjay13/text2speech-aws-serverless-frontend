@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-const API_URL = "https://8217r5vnq5.execute-api.us-east-1.amazonaws.com";
+const API_URL = "https://1u5txu1g0h.execute-api.us-east-1.amazonaws.com";
 
 function App() {
   const [file, setFile] = useState(null);
