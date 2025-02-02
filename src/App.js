@@ -44,8 +44,8 @@ function App() {
 
       console.log(data);
 
-      if (response.ok && data.download_url) {
-        setDownloadUrl(data.download_url);
+      if (response.ok && data.results && data.results[0].download_url) {
+        setDownloadUrl(data.results[0].download_url);
         setMessage("Conversion successful! Click the button to download.");
       } else {
         setMessage("Error: Could not process request.");
