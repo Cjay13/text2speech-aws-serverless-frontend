@@ -44,9 +44,6 @@ function App() {
 
       console.log(data);
 
-      console.log("Response status:", response.status);
-      console.log("Response body:", await response.text());
-
       if (data.download_url) {
         setDownloadUrl(data.download_url);
         setMessage("Conversion successful! Click the button to download.");
