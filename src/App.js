@@ -44,8 +44,8 @@ function App() {
 
       console.log(data);
 
-      console.log("Response status:", response.status)
-      console.log("Response body:", await response.text())
+      console.log("Response status:", response.status);
+      console.log("Response body:", await response.text());
 
       if (response.ok && data.download_url) {
         setDownloadUrl(data.download_url);
