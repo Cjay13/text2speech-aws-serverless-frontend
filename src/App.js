@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 
 const API_URL = "https://1u5txu1g0h.execute-api.us-east-1.amazonaws.com/text2speech_stage";
+const MAX_CHAR_LIMIT = 500;
 
 function App() {
   const [text, setText] = useState("");
@@ -8,10 +9,17 @@ function App() {
   const [downloadUrl, setDownloadUrl] = useState(null);
   const [message, setMessage] = useState("");
   const [isProcessing, setIsProcessing] = useState(false);
-
-  // Handle texr input
+  const [error, setError] = useState("");
+  // Handle text input
   const handleTextChange = (event) => {
-    setText(event.target.value);
+    const inputText = event.target.value;
+    if (inputText.length > MAX_CHAR_LIMIT) {
+      setError(`Character limit exceeded!`);
+    }
+    else {
+      setError("");
+      setText(inputText);
+    }
   };
 
   // Submit request
@@ -69,7 +77,12 @@ function App() {
         placeholder="Enter your text here"
         rows="4"
         style={{ width: "100%", padding: "10px", marginBottom: "10px" }}
+        maxLength={MAX_CHAR_LENGTH}
       />
+      <p style={{ color: text.length > MAX_CHAR_LIMIT ? "red" : "black" }}>
+        {text.length}/{MAX_CHAR_LIMIT}
+      </p>
+      {error && <p style={{ color: "red" }}>{error}</p>}
 
       {/* Voice Selection */}
       <select
@@ -84,8 +97,15 @@ function App() {
       {/* Submit Button */}
       <button
         onClick={handleSubmit}
-        disabled={isProcessing}
-        style={{ width: "100%", padding: "10px", background: "blue", color: "white", border: "none" }}
+        disabled={isProcessing || text.length > MAX_CHAR_LIMIT || text.length === 0}
+        style={{
+          width: "100%",
+          padding: "10px",
+          background: isProcessing || text.length > MAX_CHAR_LIMIT || text.length === 0 ? "gray" : "blue",
+          color: "white",
+          border: "none",
+          cursor: isProcessing || text.length > MAX_CHAR_LIMIT || text.length === 0 ? "not-allowed" : "pointer",
+        }}
       >
         {isProcessing ? "Processing..." : "Convert to Speech"}
       </button>
