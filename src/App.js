@@ -77,7 +77,7 @@ function App() {
         placeholder="Enter your text here"
         rows="4"
         style={{ width: "100%", padding: "10px", marginBottom: "10px" }}
-        maxLength={MAX_CHAR_LENGTH}
+        maxLength={MAX_CHAR_LIMIT}
       />
       <p style={{ color: text.length > MAX_CHAR_LIMIT ? "red" : "black" }}>
         {text.length}/{MAX_CHAR_LIMIT}
